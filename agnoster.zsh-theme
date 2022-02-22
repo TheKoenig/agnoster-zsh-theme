@@ -25,6 +25,7 @@
 ### Segments of the prompt, default order declaration
 
 typeset -aHg AGNOSTER_PROMPT_SEGMENTS=(
+    prompt_start
     prompt_status
     prompt_context
     prompt_virtualenv
@@ -42,6 +43,7 @@ if [[ -z "$PRIMARY_FG" ]]; then
 fi
 
 # Characters
+SEGMENT_BEGIN="\ue0b2"
 SEGMENT_SEPARATOR="\ue0b0"
 PLUSMINUS="\u00b1"
 BRANCH="\ue0a0"
@@ -66,6 +68,11 @@ prompt_segment() {
   fi
   CURRENT_BG=$1
   [[ -n $3 ]] && print -n $3
+}
+
+# Start the prompt
+prompt_start() {
+  print -n "%{%F{black}%}$SEGMENT_BEGIN"
 }
 
 # End the prompt, closing any open segments
@@ -160,8 +167,8 @@ prompt_agnoster_main() {
 prompt_agnoster_precmd() {
   vcs_info
   PROMPT="
-%{%f%b%k%}$(prompt_agnoster_main)
- %B${COMMAND}%b "
+╭─%{%f%b%k%}$(prompt_agnoster_main)
+╰─ %B${COMMAND}%b "
 }
 
 prompt_agnoster_setup() {
