@@ -157,7 +157,6 @@ prompt_virtualenv() {
 
 ## Main prompt
 prompt_agnoster_main() {
-  RETVAL=$?
   CURRENT_BG='NONE'
   for prompt_segment in "${AGNOSTER_PROMPT_SEGMENTS[@]}"; do
     [[ -n $prompt_segment ]] && $prompt_segment
@@ -165,10 +164,12 @@ prompt_agnoster_main() {
 }
 
 prompt_agnoster_precmd() {
+  RETVAL=$?
   vcs_info
-  PROMPT="
+  PS1="
 ╭─%{%f%b%k%}$(prompt_agnoster_main)
 ╰─ %B${COMMAND}%b "
+  RPS1=%*
 }
 
 prompt_agnoster_setup() {
