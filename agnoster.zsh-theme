@@ -92,16 +92,20 @@ prompt_context() {
 # Git: branch/detached head, dirty status
 prompt_git() {
   local color ref
-  is_dirty() {
-    test -n "$(git status --porcelain --ignore-submodules)"
-  }
+  local git_status="$(git status 2> /dev/null)"
   ref="$vcs_info_msg_0_"
   if [[ -n "$ref" ]]; then
-    if is_dirty; then
+    if [[ ! $git_status =~ "working tree clean" ]]; then
+      color=red
+      ref="${ref} $PLUSMINUS "
+    elif [[ $git_status =~ "Your branch is ahead of" ]]; then
       color=yellow
-      ref="${ref} $PLUSMINUS"
-    else
+      ref="${ref} "
+    elif [[ $git_status =~ "nothing to commit" ]]; then
       color=green
+      ref="${ref} "
+    else
+      color=black
       ref="${ref} "
     fi
     if [[ "${ref/.../}" == "$ref" ]]; then
