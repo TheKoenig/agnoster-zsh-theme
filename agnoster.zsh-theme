@@ -49,6 +49,8 @@ DETACHED="\u27a6"
 CROSS="\u2718"
 LIGHTNING="\u26a1"
 GEAR="\u2699"
+CHECKMARK="✔"
+COMMAND="»"
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
@@ -103,7 +105,7 @@ prompt_git() {
       ref="${ref} "
     elif [[ $git_status =~ "nothing to commit" ]]; then
       color=green
-      ref="${ref} "
+      ref="${ref} $CHECKMARK "
     else
       color=black
       ref="${ref} "
@@ -157,7 +159,9 @@ prompt_agnoster_main() {
 
 prompt_agnoster_precmd() {
   vcs_info
-  PROMPT="%{%f%b%k%}$(prompt_agnoster_main) "
+  PROMPT="
+%{%f%b%k%}$(prompt_agnoster_main)
+ %B${COMMAND}%b "
 }
 
 prompt_agnoster_setup() {
