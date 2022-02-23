@@ -1,3 +1,5 @@
+# Adapted by RUBEN KOENIG from https://github.com/agnoster/agnoster-zsh-theme
+#
 # vim:ft=zsh ts=2 sw=2 sts=2
 #
 # agnoster's Theme - https://gist.github.com/3712874
@@ -166,10 +168,8 @@ prompt_agnoster_main() {
 prompt_agnoster_precmd() {
   RETVAL=$?
   vcs_info
-  PS1="
-╭─%{%f%b%k%}$(prompt_agnoster_main)
+  PROMPT="╭─%{%f%b%k%}$(prompt_agnoster_main)
 ╰─ %B${COMMAND}%b "
-  RPS1=%*
 }
 
 prompt_agnoster_setup() {
